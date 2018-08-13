@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.infra.mapper.AddressMapper">
+
+    <resultMap id="addressResultMap" type="Address">
+        <id column="address_id" property="addressId"/>
+        <result column="address" property="address"/>
+        <result column="district" property="district"/>
+        <result column="city_id" property="cityId"/>
+        <result column="postal_code" property="postalCode"/>
+        <result column="phone" property="phone"/>
+        <result column="last_update" property="lastUpdate"/>
+    </resultMap>
+
+    <select id="selectByAddress" resultMap="addressResultMap">
+        SELECT
+            `address`.`address_id`,
+            `address`.`address`,
+            `address`.`address2`,
+            `address`.`district`,
+            `address`.`city_id`,
+            `address`.`postal_code`,
+            `address`.`phone`,
+            `address`.`location`,
+            `address`.`last_update`
+        FROM `sakila`.`address`
+        WHERE address=#{address};
+
+    </select>
+</mapper>

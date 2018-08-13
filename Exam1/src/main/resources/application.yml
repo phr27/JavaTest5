@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://%s:%s/sakila?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia%2FShanghai
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:com.hand.infra.mapper/**/*.xml
+  type-aliases-package: com.hand.domain.entity
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql
+logging:
+  level:
+    com.hand.infra.mapper: debug

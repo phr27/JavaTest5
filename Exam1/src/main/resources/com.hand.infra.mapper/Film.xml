@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.infra.mapper.FilmMapper">
+
+    <resultMap id="filmResultMap" type="Film">
+        <id column="film_id" property="filmId"/>
+        <result column="title" property="title"/>
+        <result column="description" property="description"/>
+        <result column="release_year" property="releaseYear"/>
+        <result column="language_id" property="languageId"/>
+        <result column="original_language_id" property="originalLanguageId"/>
+        <result column="rental_duration" property="rentalDuration"/>
+        <result column="rental_rate" property="rentalRate"/>
+        <result column="replacement_cost" property="replacementCost"/>
+        <result column="length" property="length"/>
+        <result column="rating" property="rating" typeHandler="com.hand.infra.util.RatingTypeHandler"/>
+        <result column="special_features" property="specialFeatures"
+                typeHandler="com.hand.infra.util.SpecialFeatureTypeHandler"/>
+        <result column="last_update" property="lastUpdate"/>
+    </resultMap>
+
+    <select id="selectByPage" resultMap="filmResultMap">
+        <bind name="offset" value="(page.page - 1) * page.pageSize"/>
+        SELECT
+            `film`.`film_id`,
+            `film`.`title`,
+            `film`.`description`,
+            `film`.`release_year`,
+            `film`.`language_id`,
+            `film`.`original_language_id`,
+            `film`.`rental_duration`,
+            `film`.`rental_rate`,
+            `film`.`length`,
+            `film`.`replacement_cost`,
+            `film`.`rating`,
+            `film`.`special_features`,
+            `film`.`last_update`
+        FROM `sakila`.`film`
+        <if test="page.sort == 'ASC'">
+            ORDER BY film_id ASC
+        </if>
+        <if test="page.sort == 'DESC'">
+            ORDER BY film_id DESC
+        </if>
+        LIMIT #{offset}, #{page.pageSize};
+
+    </select>
+</mapper>
